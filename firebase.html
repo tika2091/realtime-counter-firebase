@@ -1,0 +1,62 @@
+<!Doctype html>
+<html lang="en">
+<head>
+	<title>
+</title>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+</head>
+	<body>
+
+
+<h2>Only <span id="clickleft"></span> clicks left</h2>
+<button id="clickcounter">Click</button>
+<button id="reset">Reset</button>
+
+<script type="text/javascript">
+
+
+var config = {
+    apiKey: "AIzaSyD40rBAF9stNYKB6FX__1oLajFReEuATJY",
+    authDomain: "clickcount-96bf0.firebaseapp.com",
+    databaseURL: "https://clickcount-96bf0.firebaseio.com",
+    projectId: "clickcount-96bf0",
+    storageBucket: "clickcount-96bf0.appspot.com",
+    messagingSenderId: "250053157801"
+  };
+  firebase.initializeApp(config);
+  
+
+  var count=100;
+
+  firebase.database().ref().on("value",function(snapshot){
+  	// console.log(snapshot.val());
+  count=snapshot.val().click;
+
+  $("#clickleft").html(count);
+  });
+
+  
+  $("#clickcounter").click(function(){
+  	count--;
+  	firebase.database().ref().set({
+  		click:count
+  	});
+
+  })
+  $("#reset").click(function(){
+  	firebase.database().ref().set({
+  		click:100
+  	});
+  })
+
+
+
+</script>
+
+
+
+
+	</body>
+</html>
